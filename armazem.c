@@ -97,6 +97,7 @@ void armazem()
 
 void quimicos()
 {
+    fopen(Armazenamento, "controle/armazem.txt");
     printf("\nAcesso de:%s | Dia %d", nomedoOperador, dia);
     printf("\nSetor: Quimicos");
     printf("\nvagas Disponiveis no Setor:10");
