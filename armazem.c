@@ -11,6 +11,8 @@ int codigodeAtivacao;
 int dia = 1;
 int quantidadedoProduto;
 int atividade;
+
+int vagastotais = 10;
 //======================================
 
 //=============Partes dos Quimicos=================
@@ -42,11 +44,15 @@ int VagasD3 = 3;
 
 //=============Fim - partes dos Descartaveis=================
 
-FILE *Armazenamento;
 
 void armazem()
 {
     printf("\n\n<==== Bem - Vindo Ao Sistema de Armazenagem ====>");
+    acesso();
+}
+
+void acesso()
+{
     printf("\nQual nome do operador?");
     scanf("%s", nomedoOperador);
     printf("\nQual é sua senha de Liberação de Tarefa?:");
@@ -78,6 +84,8 @@ void armazem()
             break;
             
             default:
+                printf("erro no sistema");
+                
             break;
             }
         
@@ -91,75 +99,83 @@ void armazem()
         armazem();
     }
 
-
-
 }
 
 void quimicos()
 {
-    fopen(Armazenamento, "controle/armazem.txt");
+    FILE *Armazenamento;
+
+    Armazenamento = fopen( "controle/armazem.txt", "a");
+
+    if (Armazenamento  == NULL)
+    {
+        printf("Armazenamento nao execultado");
+    }
+    
     printf("\nAcesso de:%s | Dia %d", nomedoOperador, dia);
     printf("\nSetor: Quimicos");
     printf("\nvagas Disponiveis no Setor:10");
 
         while (quantdePalletsQ >= 0)
         {
-            printf("\n0 terreo do Setor %d", VagasQ1);
-            printf("\n1 andar do Setor %d", VagasQ2);
-            printf("\n2 andar do Setor %d", VagasQ3);
+            printf("\n1 -  terreo do Setor %d", VagasQ1);
+            printf("\n2 -  andar do Setor %d", VagasQ2);
+            printf("\n3 - andar do Setor %d", VagasQ3);
             printf("\nQual Area voce deseja?");
             scanf("%d", &area);
             switch (atividade)
             {
                 case 1:
-                    printf("\nvaga: %d", VagasQ1);
-                    printf("Vaga Ocupada com sucesso");
+                    if (VagasQ1 != 0 )
+                    {
+                        printf("\nVaga Ocupada com sucesso");
+                        VagasQ1 = VagasQ1 - 1;
+                        quantdePalletsQ --;
 
-                    VagasQ1 = VagasQ1 - 1;
-
-                    printf("\nvaga: %d", VagasQ1);
-
-
+                        printf("\nvagas Restantes: %d", VagasQ1);
+                       
+                    }
                     if (VagasQ1 == 0)
                     {
-                        printf("\nNão ha espaço disponivel");
-                        armazem();
+                     
+                        printf("\nvagas indisponiveis nessa area");   
                     }
+                    
+                    
                 break;
                 case 2:
-                    printf("\nvaga: %d", VagasQ2);
-                    printf("Vaga Ocupada com sucesso");
-
-
-                    VagasQ2 = VagasQ2 - 1;
-
-                    printf("\nvaga: %d", VagasQ2);
-
-
-                    if (VagasQ2 == 0)
+                    if (VagasQ2 != 0 )
                     {
-                        printf("\nNão ha espaço disponivel");
-                        armazem();
+                        printf("\nVaga Ocupada com sucesso");
+                        VagasQ2 = VagasQ2 - 1;
+
+                        printf("\nvagas Restantes: %d", VagasQ2);
+                       
+                    }
+                    else
+                    { 
+                        printf("\nvagas indisponiveis nessa area");   
                     }
                 break;
                 case 3:
-                    printf("\nvaga: %d", VagasQ3);
-                    printf("Vaga Ocupada com sucesso");
-
-
-                    VagasQ3 = VagasQ3 - 1;
-
-                    printf("\nvaga: %d", VagasQ3);
-
+                    if (VagasQ3 != 0 )
+                    {
+                        printf("Vaga Ocupada com sucesso");
+                        VagasQ3 = VagasQ3 - 1;
+                       
+                        printf("\nvagas Restantes: %d", VagasQ3);
+                    }
                     if (VagasQ3 == 0)
                     {
-                        printf("\nNão ha espaço disponivel");
-                        armazem();
+                        printf("\nvagas indisponiveis nessa area");   
                     }
                 break;
                 
             }
+
         }
+        fprintf(Armazenamento,"\nNome do Funcionario: %s | setor Quimico | dia: %d | Quantidade de paletes: %d", nomedoOperador, dia, quantdePalletsQ);
+        fclose(armazem);
 }
 
 
