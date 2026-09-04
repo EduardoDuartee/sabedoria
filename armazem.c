@@ -22,6 +22,10 @@ int VagasQ1 = 2;
 int VagasQ2 = 5; 
 int VagasQ3 = 3;
 
+int palletAguaSanitaria = 3;
+int palletDetergente = 2;
+int palletSaboneteLiquido = 5;
+
 //=============Fim - partes dos Quimicos=================
 
 
@@ -48,15 +52,16 @@ int VagasD3 = 3;
 void armazem()
 {
     printf("\n\n<==== Bem - Vindo Ao Sistema de Armazenagem ====>");
+    printf("\nQual nome do operador?");
+    scanf("%s", nomedoOperador);
+    printf("\nQual é sua senha de Liberação de Tarefa?:");
+    scanf("%d", &codigodeAtivacao);
     acesso();
 }
 
 void acesso()
 {
-    printf("\nQual nome do operador?");
-    scanf("%s", nomedoOperador);
-    printf("\nQual é sua senha de Liberação de Tarefa?:");
-    scanf("%d", &codigodeAtivacao);
+    
 
     if (codigodeAtivacao == 1010)
     {
@@ -65,7 +70,7 @@ void acesso()
 
         printf("\n1 - Carga de Produtos Quimicos esperando para Armazenar");
         printf("\n2 - Carga de Utensilhos Esperando para Armazenar");
-        printf("\n3 - Carga de Descartaveis PAra Armazenar");
+        printf("\n3 - Carga de Descartaveis Para Armazenar");
         printf("\nQual Atividade vaii  escolher?:");
         scanf("%d", &atividade);
 
@@ -118,12 +123,13 @@ void quimicos()
 
         while (quantdePalletsQ >= 0)
         {
+            printf("\nQuantidade de pallets: %d", quantdePalletsQ);
             printf("\n1 -  terreo do Setor %d", VagasQ1);
             printf("\n2 -  andar do Setor %d", VagasQ2);
             printf("\n3 - andar do Setor %d", VagasQ3);
             printf("\nQual Area voce deseja?");
             scanf("%d", &area);
-            switch (atividade)
+            switch (area)
             {
                 case 1:
                     if (VagasQ1 != 0 )
@@ -148,6 +154,8 @@ void quimicos()
                     {
                         printf("\nVaga Ocupada com sucesso");
                         VagasQ2 = VagasQ2 - 1;
+                        quantdePalletsQ --;
+
 
                         printf("\nvagas Restantes: %d", VagasQ2);
                        
@@ -162,6 +170,8 @@ void quimicos()
                     {
                         printf("Vaga Ocupada com sucesso");
                         VagasQ3 = VagasQ3 - 1;
+                        quantdePalletsQ --;
+
                        
                         printf("\nvagas Restantes: %d", VagasQ3);
                     }
@@ -169,13 +179,17 @@ void quimicos()
                     {
                         printf("\nvagas indisponiveis nessa area");   
                     }
-                break;
-                
+                break;     
             }
+            if (quantdePalletsQ == 0)
+                {
+                    printf("\nTodos os pallets estão guardados");
+                    acesso();
+                }
 
         }
         fprintf(Armazenamento,"\nNome do Funcionario: %s | setor Quimico | dia: %d | Quantidade de paletes: %d", nomedoOperador, dia, quantdePalletsQ);
-        fclose(armazem);
+        fclose(Armazenamento);
 }
 
 
@@ -192,7 +206,7 @@ void utensilhos()
             printf("\n2 andar do Setor %d", VagasU3);
             printf("\nQual Area voce deseja?");
             scanf("%d", &area);
-            switch (atividade)
+            switch (area)
             {
                 case 1:
                     printf("\nvaga: %d", VagasU1);
@@ -258,7 +272,7 @@ void descartaveis()
             printf("\n2 andar do Setor %d", VagasD3);
             printf("\nQual Area voce deseja?");
             scanf("%d", &area);
-            switch (atividade)
+            switch (area)
             {
                 case 1:
                     printf("\nvaga: %d", VagasD1);
